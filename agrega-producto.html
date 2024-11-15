@@ -11,9 +11,25 @@
  <script type="module" src="lib/js/submitForm.js"></script>
  <script type="module" src="lib/js/muestraError.js"></script>
 
+ <script type="module" src="./js/ROL_ID_ADMINISTRADOR.js"></script>
+ <script type="module" src="./js/protege.js"></script>
+ <script type="module" src="./js/custom/mi-nav.js"></script>
+
 </head>
 
-<body>
+<body
+
+onload="protege('srv/sesion-actual.php', [ROL_ID_ADMINISTRADOR], 'index.html')
+   .then(sesion => {
+     nav.sesion = sesion
+     main.hidden = false
+    })
+   .catch(muestraError)"
+>
+
+<mi-nav id="nav"></mi-nav>
+
+<main id="main" hidden>
 
  <form onsubmit="submitForm('srv/producto-agrega.php', event)
     .then(modelo => location.href = 'index-productos.html')
@@ -49,6 +65,8 @@
   <p><button type="submit">Agregar</button></p>
 
  </form>
+
+</main>
 
 </body>
 

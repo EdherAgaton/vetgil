@@ -16,11 +16,11 @@ ejecutaServicio(function () {
   $id = htmlentities($encodeId);
   $nombre = htmlentities($modelo[PRO_NOMBRE]);
   $render .=
-   "<li>
+   "<dd>
      <p>
       <a href='modifica-producto.html?id=$id'>$nombre</a>
      </p>
-    </li>";
+    </dd>";
  }
 
  devuelveJson(["lista" => ["innerHTML" => $render]]);

@@ -11,21 +11,41 @@
  <script type="module" src="lib/js/consumeJson.js"></script>
  <script type="module" src="lib/js/muestraObjeto.js"></script>
  <script type="module" src="lib/js/muestraError.js"></script>
+ <script type="module" src="./js/ROL_ID_ADMINISTRADOR.js"></script>
+ <script type="module" src="./js/protege.js"></script>
+ <script type="module" src="./js/custom/mi-nav.js"></script>
 
 </head>
 
-<body onload="consumeJson('srv/productos.php')
+<body onload="protege('srv/sesion-actual.php', [ROL_ID_ADMINISTRADOR], 'index.html')
+.then(sesion => { 
+    nav.sesion = sesion; 
+    main.hidden = false;
+    return consumeJson('srv/productos.php');
+})
+.then(respuesta => muestraObjeto(document, respuesta.body))
+.catch(muestraError)",
+   >
+
+<!-- <body onload="consumeJson('srv/productos.php')
    .then(respuesta => muestraObjeto(document, respuesta.body))
-   .catch(muestraError)">
+   .catch(muestraError)",
+   >-->
+  
+
+<mi-nav id="nav"></mi-nav>
+
+<main id="main" hidden>
 
  <h1>Acceso a base de datos Productos</h1>
 
  <p><a href="agrega-producto.html">Agregar</a></p>
+ <!--<p><a href="index.html">Inicio</a></p>-->
 
- <ul id="lista">
+ <dl id="lista">
   <li><progress max="100">Cargando&hellip;</progress></li>
- </ul>
-
+ </dl>
+</main>
 </body>
 
 </html>

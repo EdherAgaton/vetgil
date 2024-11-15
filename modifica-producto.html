@@ -14,6 +14,11 @@
  <script type="module" src="lib/js/muestraObjeto.js"></script>
  <script type="module" src="lib/js/muestraError.js"></script>
 
+ <script type="module" src="./js/ROL_ID_ADMINISTRADOR.js"></script>
+ <script type="module" src="./js/protege.js"></script>
+ <script type="module" src="./js/custom/mi-nav.js"></script>
+
+
  <script>
   // Obtiene los parámetros de la página.
   const params = new URL(location.href).searchParams
@@ -21,11 +26,25 @@
 
 </head>
 
-<body onload="if (params.size > 0) {
+<body onload="protege('srv/sesion-actual.php', [ROL_ID_ADMINISTRADOR], 'index.html')
+.then(sesion => { 
+    nav.sesion = sesion; 
+    main.hidden = false;
+    return consumeJson('srv/producto.php?' + params);
+})
+    .then(respuesta => muestraObjeto(forma, respuesta.body))
+    .catch(muestraError)">
+
+<!--<body onload="if (params.size > 0) {
    consumeJson('srv/producto.php?' + params)
     .then(respuesta => muestraObjeto(forma, respuesta.body))
     .catch(muestraError)
-  }">
+  }">-->
+
+  <mi-nav id="nav"></mi-nav>
+
+  <main id="main" hidden>
+
 
  <form id="forma" onsubmit="submitForm('srv/producto-modifica.php', event)
     .then(respuesta => location.href = 'index-productos.html')
@@ -76,7 +95,7 @@
   </p>
 
  </form>
-
+</main>
 </body>
 
 </html>
